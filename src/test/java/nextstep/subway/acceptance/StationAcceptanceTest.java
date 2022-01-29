@@ -23,7 +23,7 @@ class StationAcceptanceTest extends AcceptanceTest {
     void createStation() {
         // when
         final ExtractableResponse<Response> response = 지하철_역_생성을_요청한다(강남역);
-
+      
         // then
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value()),
@@ -106,7 +106,11 @@ class StationAcceptanceTest extends AcceptanceTest {
         // when
         final ExtractableResponse<Response> response = 지하철_역_삭제를_요청한다(강남역_번호);
 
-        // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    private ExtractableResponse<Response> 지하철_역_삭제를_요청한다(final String uri) {
+        return RestAssured.given().log().all()
+                .when()
+                .delete(uri)
+                .then().log().all()
+                .extract();
     }
 }
